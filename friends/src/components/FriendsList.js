@@ -6,39 +6,42 @@ import Friend from "./Friend";
 const FriendsList = () => {
     const [friends, setFriends] = useState([]);
 
-    // componentDidMount() {
-    //     this.getData();
-    // }
-
+    // const getData = () => {
+    //     axiosWithAuth()
+    //         .get('/friends')
+    //         .then(res => res.data.map((f) => {
+    //             setFriends(...friends, res.data);
+    //             return (
+    //                 <div>
+    //                     <Friend props={f} />
+    //                 </div>
+    //             )
+    //         }))
+    //         .catch(err => console.log(err))
+    // };
 
     const getData = () => {
         axiosWithAuth()
             .get('/friends')
-            .then(res => res.data.map((f) => {
-                console.log("this is logged for getdata", f)
-                return (
-                    <div>
-                        <Friend props={f} />
-                    </div>
-                )
-            }))
+            .then(res => {
+                setFriends(res.data)
+            })
             .catch(err => console.log(err))
     };
 
-    // console.log(friends);
+
     return (
             <div>
                 <button onClick={getData()} >Get Friends</button>
-                <div>
-                    <ul>
-                        {friends.map(() => <li/>)}
-                        {/* {friends.map((friend) => <li
-                        key={friend.id}
-                        value={friend}
-                        
-                        />)} */}
-                    </ul>
-                </div>
+                    
+                    {friends.map((item) => (
+                    <div key={item.id}>
+                    <p>Name: {item.name}</p>
+                    <p>Age: {item.age}</p>
+                    <p>Email: {item.email}</p>
+                    </div>
+                    ))}
+                
             </div>
             
     )
